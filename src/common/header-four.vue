@@ -1,0 +1,62 @@
+<template>
+  <div class="header">
+    <div class="header-left"
+         @click="$router.go(-1)">
+      <i class="iconfont icon-zuojiantou"></i>
+    </div>
+    <div class="header-in">{{title}}</div>
+    <div class="header-rigth">
+      <slot></slot>
+    </div>
+  </div>
+</template>
+
+<script>
+export default {
+  name: "HeaderFour",
+  props: [
+    "title"
+  ]
+}
+</script>
+
+<style lang="stylus" scoped>
+.header {
+  width: 100%;
+  height: 1.45rem;
+  background-color:#fff;
+  z-index: 1;
+
+  .header-left {
+    width: 10%;
+    height: 100%;
+    float: left;
+
+    i {
+      font-size: 0.6rem;
+      line-height: 1.45rem;
+      text-align: center;
+      display: block;
+      color:#000;
+    }
+  }
+
+  .header-in {
+    width: 80%;
+    float: left;
+    text-align: left ;
+    font-size: 36px;
+    line-height: 1.45rem;
+    color:#000;
+    font-weight:500;
+  }
+
+  .header-rigth {
+    width: 10%;
+    text-align: center;
+    font-size: 0.45rem;
+    line-height: 1.45rem;
+    float: left;
+  }
+}
+</style>

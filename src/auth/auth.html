@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>支付</title>
+    <meta http-equiv="Access-Control-Allow-Origin" content="*" />
+    <script src="http://code.jquery.com/jquery-latest.js"></script>
+</head>
+<body>
+    <div class="first" id="first"> 
+        <p>九农仓溯源商城</p>
+    </div>
+    <div class="second margin">
+        <p class="pay">收款方</p>
+        <p class="company">湖南道业信息科技有限公司</p>
+    </div>
+    <div class="third margin">
+        <input class="payBtn" type="button" value="立即支付" onclick="pay()"/>
+    </div>
+</body>
+<script>
+    let result;
+    let code;
+    let orderId;
+    let successUrl="http://hnst888.com/shop/#/success";
+    let params;
+    let str;
+    //页面加载完成之后立即加载
+    $(function(){
+        var url=window.location.href;
+        var args=getQueryString(url);
+        for(var i=0;i<args.length;i++){
+            if(args[i].key==="code"){
+                code=args[i].value;
+            }
+            if(args[i].key==="state"){
+                params=args[i].value;
+            }
+        }
+        str=params.split('%26');
+        let box=document.getElementById("first");
+        var h1=document.createElement("h1");
+        h1.innerText="￥"+str[1];
+        box.appendChild(h1);
+    })
+   
+    function pay(){
+        let data={
+            code:code
+        };
+        // 获取调用H5支付所需要的参数
+        $.ajax({
+            url:"http://hnst888.com:8085/order/dopay/"+str[0],
+            type:"post",
+            data:data,
+            params:{
+                "contentType": "application/json;charset=utf-8"
+            },
+            success:function(res){
+                if(res.code==200){
+                    let result=res.data;
+                    if (typeof WeixinJSBridge == "undefined"){
+                        if( document.addEventListener ){
+                            document.addEventListener('WeixinJSBridgeReady', onBridgeReady, false);
+                        }else if (document.attachEvent){
+                            document.attachEvent('WeixinJSBridgeReady', onBridgeReady); 
+                            document.attachEvent('onWeixinJSBridgeReady', onBridgeReady);
+                        }
+                    }else{
+                        onBridgeReady(result);
+                    }
+                }
+            },
+            error:function(res){
+                alert("error");
+            }
+        })
+    }
+    function onBridgeReady(result){
+      WeixinJSBridge.invoke(
+          'getBrandWCPayRequest', {
+            "appId":result.appId,     //公众号名称，由商户传入     
+            "timeStamp":result.timeStamp,         //时间戳，自1970年以来的秒数     
+            "nonceStr":result.nonceStr, //随机串     
+            "package":result.package,     
+            "signType":result.signType,         //微信签名方式：     
+            "paySign":result.paySign //微信签名 
+          },
+           function(res){      
+      	    if(res.err_msg == "get_brand_wcpay_request:ok" ) {
+                //  console.log('支付成功');
+                 window.location.href=successUrl;
+                 //支付成功后跳转的页面
+            }else if(res.err_msg == "get_brand_wcpay_request:cancel"){
+          	   console.log('支付取消');
+            }else if(res.err_msg == "get_brand_wcpay_request:fail"){
+          	   console.log('支付失败');
+                 WeixinJSBridge.call('closeWindow');
+            } //使用以上方式判断前端返回,微信团队郑重提示：res.err_msg将在用户支付成功后返回ok,但并不保证它绝对可靠。
+      }); 
+    }
+    //获取code
+    function getQueryString(url) {
+        if(url.indexOf("?")>-1){
+            var result=[];
+            var paraStr=url.split("?")[1];
+            var paraItems=paraStr.split("&");
+            for(var i=0;i<paraItems.length;i++){
+                var paraKey=paraItems[i].split("=")[0];
+                var paraValue=paraItems[i].split("=")[1];
+                result.push({
+                    key:paraKey,
+                    value:paraValue
+                })
+            }	
+            return result;
+        }
+        else{
+            alert("该URL中不含参数")
+        }
+    }
+     
+</script>
+<style>
+    body{
+        background-color: #f5f5f5;
+    }
+    *{
+        margin: 0;
+        padding: 0;
+    }
+    .margin{
+        margin-top:80px;
+    }
+    h1{
+        text-align: center;
+        margin-top:15px;
+        font-size: 65px;
+        font-weight: bold;
+    }
+    .first{
+        margin-top: 60px;
+    }
+    .first p{
+        text-align: center;
+        font-size: 30px;
+    }
+    .second{
+        background-color: #ffffff;
+        overflow: hidden;
+    }
+    .second p{
+        font-size: 26px;
+    }
+    .second .pay{
+        float: left;
+        padding:20px 40px;
+        color: #999999;;
+    }
+    .second .company{
+        float: right;
+        padding:20px 40px;
+        color: #1D1D1D;
+    }
+    .third{
+        width: 100%;
+        height: 100%;
+        text-align: center;
+    }
+    .payBtn{
+        width:95%;
+        height: 100px;
+        line-height: 100px;
+        background-color: #07c160;
+        border: 1px solid #07c160;
+        color: #ffffff;
+        border-radius: 10px;
+        font-size: 35px;
+        font-weight: bold;
+    }
+</style>
+</html>
