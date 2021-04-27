@@ -1,23 +1,9 @@
-# trace mall
+# 溯源商城app前端
 
 ## 整体介绍
 
 `trace mall` 项目致力于打造一个完整的商品溯源+电商系统。包括溯源系统和商城系统。
 采用前后端分离方式开发，后端基于SprintBoot+MyBatis实现，前端基于vue实现。
-
-## 项目演示
-
-商品溯源页面(手机版)： [http://47.96.150.2/shop/#/batch/batchDetail?id=994B8240B731F691430F04312CD95FFC](http://47.96.150.2/shop/#/batch/batchDetail?id=994B8240B731F691430F04312CD95FFC)
-
-商城页面(手机版)： [http://47.96.150.2/shop](http://47.96.150.2/shop) （账号：lb， 密码：123456）
-
-扫码展示页面(pc版)：[http://47.96.150.2/view](http://47.96.150.2/view)（账号：admin， 密码：admin123）
-
-溯源管理页面：暂不开放
-
-商城管理页面：暂不开放
-
-![用户页面演示.gif](/document/resource/trace-mall.gif)
 
 ## 代码地址
 
@@ -36,6 +22,41 @@
 * 溯源商城管理前端： https://github.com/lanchengyu/trace_mall_admin_frontend
 
 * 溯源商城app前端： https://github.com/lanchengyu/trace_mall_app_frontend
+
+## 项目演示
+
+### 体验地址
+
+商品溯源页面(手机版)： [http://47.96.150.2/shop/#/batch/batchDetail?id=994B8240B731F691430F04312CD95FFC](http://47.96.150.2/shop/#/batch/batchDetail?id=994B8240B731F691430F04312CD95FFC)
+
+商城页面(手机版)： [http://47.96.150.2/shop](http://47.96.150.2/shop) （账号：lb， 密码：123456）
+
+扫码展示页面(pc版)：[http://47.96.150.2/view](http://47.96.150.2/view)（账号：admin， 密码：admin123）
+
+溯源管理页面：暂不开放
+
+商城管理页面：暂不开放
+
+一物一码体验：该码用于贴在商品上，供用户扫码鉴别真假，扫码后会进入商品溯源页面，可用浏览器扫码体验。
+
+![二维码图片.jpg](https://github.com/lanchengyu/trace_mall_app_frontend/blob/main/document/resource/huangtao.jpg)
+
+### 页面展示
+
+若图片加载不出来，可尝试修改dns服务器为: 8.8.8.8(首选服务器); 8.8.4.4（备选服务器）
+
+用户页面：
+
+![用户页面演示.gif](https://github.com/lanchengyu/trace_mall_app_frontend/blob/main/document/resource/trace-mall.gif)
+
+扫码统计页面：
+
+![扫码统计页面.png](https://github.com/lanchengyu/trace_mall_app_frontend/blob/main/document/resource/trace_data.png)
+
+溯源码管理页面：
+
+![溯源码管理页面.png](https://github.com/lanchengyu/trace_mall_app_frontend/blob/main/document/resource/trace_code_admin.png)
+
 
 ## 详细介绍
 
